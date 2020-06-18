@@ -1,6 +1,8 @@
 * Intro
 
-This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]]. This is an interesting idea package.
+This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]] and [[https://github.com/DogLooksGood/rainbow-fart.el][rainbow-fart.el]].
+
+This is an interesting idea package.
 
 ** LICENSE
 
