@@ -1,0 +1,15 @@
+* Intro
+
+This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]]. This is an interesting idea package.
+
+** LICENSE
+
+This package elisp code is published under GPL v3, the voice data is from
+[[https://github.com/SaekiRaku/vscode-rainbow-fart][vscode-rainbow-fart]] which is released under [[https://github.com/SaekiRaku/vscode-rainbow-fart/blob/master/LICENSE][MIT license]].
+
+* Install
+
+
+* Usage
+
+
