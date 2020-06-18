@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-18 23:11:23 stardiviner>
+;;; Time-stamp: <2020-06-18 23:35:28 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -61,7 +61,10 @@
     ("shit" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
     ("damn" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
     ;; TODO time voices
-    )
+    ;; TODO `flycheck' support
+    ("info" . ())
+    ("warning" . ())
+    ("error" . ()))
   "An alist of pairs of programming language keywords and voice filenames."
   :type 'alist
   :safe #'listp
@@ -101,14 +104,31 @@
   (let* ((prefix (thing-at-point 'symbol)))
     (rainbow-fart--play prefix)))
 
+(defun rainbow-fart--linter-display-error (err)
+  "Play voice for `flycheck-error' ERR."
+  (let ((level (flycheck-error-level err)))
+    (rainbow-fart--play level)))
+
+(defun rainbow-fart--linter-display-errors (errors)
+  "A function to report ERRORS used as replacement of linter like `flycheck' and `flymake'."
+  (rainbow-fart--play
+   (mapc #'rainbow-fart--linter-display-error
+         (seq-uniq
+          (seq-mapcat #'flycheck-related-errors errors)))))
+
 (define-minor-mode rainbow-fart-mode
   "A minor mode add an encourager when you programming."
   :init-value nil
   :lighter " rainbow-fart "
   :group 'rainbow-fart
   (if rainbow-fart-mode
-      (add-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t t)
-    (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)))
+      (progn
+        (add-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t t)
+        (advice-add (buffer-local-value 'flycheck-display-errors-function (current-buffer))
+                    :before 'rainbow-fart--linter-display-errors))
+    (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)
+    (advice-remove (buffer-local-value 'flycheck-display-errors-function (current-buffer))
+                   'rainbow-fart--linter-display-errors)))
 
 
 
