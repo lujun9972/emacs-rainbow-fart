@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-18 21:13:05 stardiviner>
+;;; Time-stamp: <2020-06-18 23:11:23 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -78,25 +78,28 @@
 (defvar rainbow-fart--playing nil
   "The status of rainbow-fart playing.")
 
+(defun rainbow-fart--play (keyword)
+  "A private function to play voice for matched KEYWORD."
+  (unless rainbow-fart--playing
+    (when-let ((files (cdr (assoc keyword rainbow-fart-voice-alist))))
+      (let ((file (nth (random (length files)) files)))
+        (setq rainbow-fart--playing t)
+        (let ((file-path (when (file-exists-p (concat rainbow-fart-voice-directory file))
+                           (concat rainbow-fart-voice-directory file)))
+              (command (cond
+                        ;; ((executable-find "aplay") "aplay")
+                        ((executable-find "mpg123") "mpg123")
+                        ((executable-find "mplayer") "mplayer")
+                        ((executable-find "mpv") "mpv"))))
+          (make-process :name "rainbow-fart"
+                        :command `(,command ,file-path)
+                        :buffer "*rainbow-fart*"
+                        :sentinel (lambda (proc event) (setq rainbow-fart--playing nil))))))))
+
 (defun rainbow-fart--post-self-insert ()
   "A hook function on `post-self-insert-hook' to play audio."
-  (unless rainbow-fart--playing
-    (let* ((prefix (thing-at-point 'symbol))
-           (files (cdr (assoc prefix rainbow-fart-voice-alist))))
-      (when files
-        (let ((file (nth (random (length files)) files)))
-          (setq rainbow-fart--playing t)
-          (let ((file-path (when (file-exists-p (concat rainbow-fart-voice-directory file))
-                             (concat rainbow-fart-voice-directory file)))
-                (command (cond
-                          ;; ((executable-find "aplay") "aplay")
-                          ((executable-find "mpg123") "mpg123")
-                          ((executable-find "mplayer") "mplayer")
-                          ((executable-find "mpv") "mpv"))))
-            (make-process :name "rainbow-fart"
-                          :command `(,command ,file-path)
-                          :buffer "*rainbow-fart*"
-                          :sentinel (lambda (proc event) (setq rainbow-fart--playing nil)))))))))
+  (let* ((prefix (thing-at-point 'symbol)))
+    (rainbow-fart--play prefix)))
 
 (define-minor-mode rainbow-fart-mode
   "A minor mode add an encourager when you programming."
