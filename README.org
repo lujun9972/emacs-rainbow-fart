@@ -7,7 +7,7 @@ This is an interesting idea package.
 ** LICENSE
 
 This package elisp code is published under GPL v3, the voice data is from
-[[https://github.com/SaekiRaku/vscode-rainbow-fart][vscode-rainbow-fart]] which is released under [[https://github.com/SaekiRaku/vscode-rainbow-fart/blob/master/LICENSE][MIT license]].
+[[https://github.com/JustKowalski][GitHub@JustKowalski]] and project [[https://github.com/SaekiRaku/vscode-rainbow-fart][vscode-rainbow-fart]] which is released under [[https://github.com/SaekiRaku/vscode-rainbow-fart/blob/master/LICENSE][MIT license]].
 
 * Install
 
