@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-18 23:35:28 stardiviner>
+;;; Time-stamp: <2020-06-19 00:38:11 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -60,7 +60,15 @@
     ("fuck" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
     ("shit" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
     ("damn" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
-    ;; TODO time voices
+    ;; time
+    ("hour" . ("time_each_hour_01.mp3" "time_each_hour_02.mp3"
+               "time_each_hour_03.mp3" "time_each_hour_04.mp3" "time_each_hour_05.mp3"))
+    ("morning" . ("time_morning_01.mp3"))
+    ("before_noon" . ("time_before_noon_01.mp3" "time_before_noon_02.mp3"
+                      "time_before_noon_03.mp3" "time_before_noon_04.mp3"))
+    ("noon" . ("time_noon_01.mp3"))
+    ("evening" . ("time_evening_01.mp3"))
+    ("midnight" . ("time_midnight_01.mp3"))
     ;; TODO `flycheck' support
     ("info" . ())
     ("warning" . ())
@@ -99,10 +107,14 @@
                         :buffer "*rainbow-fart*"
                         :sentinel (lambda (proc event) (setq rainbow-fart--playing nil))))))))
 
+;;; prefix detection
+
 (defun rainbow-fart--post-self-insert ()
   "A hook function on `post-self-insert-hook' to play audio."
   (let* ((prefix (thing-at-point 'symbol)))
     (rainbow-fart--play prefix)))
+
+;;; linter like `flycheck'
 
 (defun rainbow-fart--linter-display-error (err)
   "Play voice for `flycheck-error' ERR."
@@ -116,6 +128,39 @@
          (seq-uniq
           (seq-mapcat #'flycheck-related-errors errors)))))
 
+;;; timer
+
+(defun rainbow-fart--timing ()
+  "Play voice for current time quantum."
+  (let* ((time (format-time-string "%H:%M"))
+         (pair (split-string time ":"))
+         (hour (string-to-number (car pair)))
+         (minute (string-to-number (cadr pair))))
+    (cond
+     ((and (> hour 05) (< hour 08))     ; 05:00 -- 08:00
+      "morning")
+     ((and (> hour 08) (< hour 10))     ; 08:00 -- 10:00
+      "hour")
+     ((and (> hour 10) (< hour 11))     ; 10:00 -- 11:00
+      "before_noon")
+     ((and (> hour 11) (< hour 13))     ; 11:00 -- 13:00
+      "noon")
+     ((and (> hour 13) (< hour 15))     ; 13:00 -- 15:00
+      "hour")
+     ((and (> hour 15) (< hour 17))     ; 15:00 -- 17:00
+      "afternoon")
+     ((and (> hour 18) (< hour 22))     ; 18:00 -- 21:00
+      "evening")
+     ((or (> hour 23) (< hour 01))     ; 23:00 -- 01:00
+      "midnight"))))
+
+(defun rainbow-fart--timing-remind ()
+  "Remind you in specific time quantum."
+  (rainbow-fart--play (rainbow-fart--timing)))
+
+(defvar rainbow-fart--timer nil)
+
+
 (define-minor-mode rainbow-fart-mode
   "A minor mode add an encourager when you programming."
   :init-value nil
@@ -125,10 +170,13 @@
       (progn
         (add-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t t)
         (advice-add (buffer-local-value 'flycheck-display-errors-function (current-buffer))
-                    :before 'rainbow-fart--linter-display-errors))
+                    :before 'rainbow-fart--linter-display-errors)
+        (setq rainbow-fart--timer
+              (run-with-timer 10 (* 60 15) 'rainbow-fart--timing-remind)))
     (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)
     (advice-remove (buffer-local-value 'flycheck-display-errors-function (current-buffer))
-                   'rainbow-fart--linter-display-errors)))
+                   'rainbow-fart--linter-display-errors)
+    (cancel-timer rainbow-fart--timer)))
 
 
 
