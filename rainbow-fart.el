@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-18 20:47:07 stardiviner>
+;;; Time-stamp: <2020-06-18 21:13:05 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -37,6 +37,7 @@
   '(("defun" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("defn" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("fn" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
+    ("lambda" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("function" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("->" . ("arrow_function_01.mp3"))
     ("->>" . ("arrow_function_01.mp3"))
@@ -47,9 +48,14 @@
     ("for" . ("for_01.mp3" "for_02.mp3" "for_03.mp3"))
     ("loop" . ("for_01.mp3" "for_02.mp3" "for_03.mp3"))
     ("await" . ("await_01.mp3" "await_02.mp3" "await_03.mp3"))
+    ("promise" . ("await_01.mp3" "await_02.mp3" "await_03.mp3"))
     ("catch" . ("catch_01.mp3" "catch_02.mp3" "catch_03.mp3"))
     ("import" . ("import_01.mp3" "import_02.mp3"))
+    (":import" . ("import_01.mp3" "import_02.mp3"))
     (":require" . ("import_01.mp3" "import_02.mp3"))
+    ("require" . ("import_01.mp3" "import_02.mp3"))
+    ("load" . ("import_01.mp3" "import_02.mp3"))
+    ("load-file" . ("import_01.mp3" "import_02.mp3"))
     ("v-html" . ("v_html_01.mp3"))
     ("fuck" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
     ("shit" . ("fuck_pm_01.mp3" "fuck_pm_02.mp3"))
