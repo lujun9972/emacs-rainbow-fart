@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 00:38:11 stardiviner>
+;;; Time-stamp: <2020-06-19 14:15:16 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -86,12 +86,23 @@
   :safe #'stringp
   :group 'rainbow-fart)
 
+(defcustom rainbow-fart-interval (* 60 5)
+  "The time interval in seconds of rainbow-fart play voice."
+  :type 'number
+  :safe #'numberp
+  :group 'rainbow-fart)
+
 (defvar rainbow-fart--playing nil
   "The status of rainbow-fart playing.")
 
+(defvar rainbow-fart--play-last-time nil
+  "The last time of rainbow-fart play.")
+
 (defun rainbow-fart--play (keyword)
   "A private function to play voice for matched KEYWORD."
-  (unless rainbow-fart--playing
+  (unless (or rainbow-fart--playing
+              (not (when rainbow-fart--play-last-time
+                     (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-interval))))
     (when-let ((files (cdr (assoc keyword rainbow-fart-voice-alist))))
       (let ((file (nth (random (length files)) files)))
         (setq rainbow-fart--playing t)
@@ -105,7 +116,9 @@
           (make-process :name "rainbow-fart"
                         :command `(,command ,file-path)
                         :buffer "*rainbow-fart*"
-                        :sentinel (lambda (proc event) (setq rainbow-fart--playing nil))))))))
+                        :sentinel (lambda (proc event)
+                                    (setq rainbow-fart--playing nil)
+                                    (setq rainbow-fart--play-last-time (float-time)))))))))
 
 ;;; prefix detection
 
