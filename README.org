@@ -6,13 +6,7 @@ This is an interesting idea package.
 
 Here is a screencast which is recorded by [[https://github.com/DogLooksGood][DogLooksGood]].
 
-#+begin_export html
-<div id="screencast">
-  <video src="Emacs rainbow-fart demo.mp4">Emacs rainbow-fart demo</video>
-</div>
-#+end_export
-
-[[file:Emacs rainbow-fart demo.mp4]]
+[[Emacs rainbow-fart demo.mp4][Emacs rainbow-fart demo.mp4]]
 
 ** LICENSE
 
