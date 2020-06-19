@@ -6,7 +6,11 @@ This is an interesting idea package.
 
 Here is a screencast which is recorded by [[https://github.com/DogLooksGood][DogLooksGood]].
 
-[[Emacs rainbow-fart demo.mp4][Emacs rainbow-fart demo.mp4]]
+#+begin_export html
+<video src="Emacs rainbow-fart demo.mp4" type="video/mp4" autoplay controls="controls">
+  emacs-rainbow-fart demo
+</video>
+#+end_export
 
 ** LICENSE
 
