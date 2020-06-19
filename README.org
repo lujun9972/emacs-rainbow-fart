@@ -1,5 +1,7 @@
 * Intro
 
+[[file:emacs-rainbow-fart logo.png]]
+
 This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]] and [[https://github.com/DogLooksGood/rainbow-fart.el][rainbow-fart.el]].
 
 This is an interesting idea package.
