@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 14:15:16 stardiviner>
+;;; Time-stamp: <2020-06-19 14:24:57 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -86,8 +86,15 @@
   :safe #'stringp
   :group 'rainbow-fart)
 
-(defcustom rainbow-fart-interval (* 60 5)
-  "The time interval in seconds of rainbow-fart play voice."
+
+(defcustom rainbow-fart-keyword-interval (* 60 5)
+  "The time interval in seconds of rainbow-fart play voice for keywords."
+  :type 'number
+  :safe #'numberp
+  :group 'rainbow-fart)
+
+(defcustom rainbow-fart-time-interval (* 60 15)
+  "The time interval in seconds of rainbow-fart play voice for hours."
   :type 'number
   :safe #'numberp
   :group 'rainbow-fart)
@@ -102,7 +109,7 @@
   "A private function to play voice for matched KEYWORD."
   (unless (or rainbow-fart--playing
               (not (when rainbow-fart--play-last-time
-                     (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-interval))))
+                     (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval))))
     (when-let ((files (cdr (assoc keyword rainbow-fart-voice-alist))))
       (let ((file (nth (random (length files)) files)))
         (setq rainbow-fart--playing t)
@@ -185,7 +192,7 @@
         (advice-add (buffer-local-value 'flycheck-display-errors-function (current-buffer))
                     :before 'rainbow-fart--linter-display-errors)
         (setq rainbow-fart--timer
-              (run-with-timer 10 (* 60 15) 'rainbow-fart--timing-remind)))
+              (run-with-timer 10 rainbow-fart-time-interval 'rainbow-fart--timing-remind)))
     (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)
     (advice-remove (buffer-local-value 'flycheck-display-errors-function (current-buffer))
                    'rainbow-fart--linter-display-errors)
