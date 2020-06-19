@@ -34,6 +34,16 @@ This package elisp code is published under GPL v3, the voice data is from
 (add-hook 'prog-mode-hook #'rainbow-fart-mode)
 #+end_src
 
+* Contribution
+
+- [ ] Need an elegant solution to handle different model voices which have different voice files
+- [ ] Need more voice models
+- [ ] I will add contributors into list
+
+** Contributors
+
+- DogLooksGood
+
 * Usage
 
 Just like the screencast video shows, A voice played when you type some keywords.
