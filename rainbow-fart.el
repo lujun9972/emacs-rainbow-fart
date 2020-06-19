@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 22:52:58 stardiviner>
+;;; Time-stamp: <2020-06-19 23:10:47 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -203,7 +203,8 @@ If it's nil, the hours remind will not started."
     (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)
     (advice-remove (buffer-local-value 'flycheck-display-errors-function (current-buffer))
                    'rainbow-fart--linter-display-errors)
-    (cancel-timer rainbow-fart--timer)))
+    (when rainbow-fart--timer
+      (cancel-timer rainbow-fart--timer))))
 
 
 
