@@ -12,6 +12,8 @@ Here is a screencast which is recorded by [[https://github.com/DogLooksGood][Dog
 </video>
 #+end_export
 
+[[Emacs rainbow-fart demo.mp4]]
+
 ** LICENSE
 
 This package elisp code is published under GPL v3, the voice data is from
