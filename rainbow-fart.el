@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 14:24:57 stardiviner>
+;;; Time-stamp: <2020-06-19 17:50:08 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -80,12 +80,17 @@
 
 (defcustom rainbow-fart-voice-directory
   (concat (file-name-directory (or load-file-name buffer-file-name))
-          "voices/voice-chinese-default/")
+          "voices/" rainbow-fart-voice-model "/")
   "The directory of voices."
   :type 'string
   :safe #'stringp
   :group 'rainbow-fart)
 
+(defcustom rainbow-fart-voice-model "JustKowalski"
+  "The voice model to be used."
+  :type 'string
+  :safe #'stringp
+  :group 'rainbow-fart)
 
 (defcustom rainbow-fart-keyword-interval (* 60 5)
   "The time interval in seconds of rainbow-fart play voice for keywords."
