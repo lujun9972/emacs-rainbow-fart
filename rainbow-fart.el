@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 17:50:08 stardiviner>
+;;; Time-stamp: <2020-06-19 22:52:58 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -99,7 +99,8 @@
   :group 'rainbow-fart)
 
 (defcustom rainbow-fart-time-interval (* 60 15)
-  "The time interval in seconds of rainbow-fart play voice for hours."
+  "The time interval in seconds of rainbow-fart play voice for hours.
+If it's nil, the hours remind will not started."
   :type 'number
   :safe #'numberp
   :group 'rainbow-fart)
@@ -196,8 +197,9 @@
         (add-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t t)
         (advice-add (buffer-local-value 'flycheck-display-errors-function (current-buffer))
                     :before 'rainbow-fart--linter-display-errors)
-        (setq rainbow-fart--timer
-              (run-with-timer 10 rainbow-fart-time-interval 'rainbow-fart--timing-remind)))
+        (when rainbow-fart-time-interval
+          (setq rainbow-fart--timer
+                (run-with-timer 10 rainbow-fart-time-interval 'rainbow-fart--timing-remind))))
     (remove-hook 'post-self-insert-hook #'rainbow-fart--post-self-insert t)
     (advice-remove (buffer-local-value 'flycheck-display-errors-function (current-buffer))
                    'rainbow-fart--linter-display-errors)
