@@ -1,9 +1,9 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-20 14:58:26 stardiviner>
+;;; Time-stamp: <2020-06-20 15:03:22 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
-;; Package-Requires: ((emacs "25.1"))
+;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
 ;; Package-Version: 0.1
 ;; Keywords: tools
 ;; homepage: https://github.com/stardiviner/emacs-rainbow-fart
@@ -23,11 +23,14 @@
 ;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
-
+;; 
+;; Usage:
+;; (add-hook 'prog-mode-hook #'rainbow-fart-mode)
 
 ;;; Code:
 
+(require 'flycheck)
+
 (defgroup rainbow-fart nil
   "rainbow-fart-mode customize group."
   :prefix "rainbow-fart-"
@@ -129,7 +132,7 @@ If it's nil, the hours remind will not started."
           (make-process :name "rainbow-fart"
                         :command `(,command ,file-path)
                         :buffer "*rainbow-fart*"
-                        :sentinel (lambda (proc event)
+                        :sentinel (lambda (_ __)
                                     (setq rainbow-fart--playing nil)
                                     (setq rainbow-fart--play-last-time (float-time)))))))))
 
@@ -160,8 +163,7 @@ If it's nil, the hours remind will not started."
   "Play voice for current time quantum."
   (let* ((time (format-time-string "%H:%M"))
          (pair (split-string time ":"))
-         (hour (string-to-number (car pair)))
-         (minute (string-to-number (cadr pair))))
+         (hour (string-to-number (car pair))))
     (cond
      ((and (> hour 05) (< hour 08))     ; 05:00 -- 08:00
       "morning")
