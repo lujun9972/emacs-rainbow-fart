@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-20 15:03:22 stardiviner>
+;;; Time-stamp: <2020-06-20 15:35:41 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -117,8 +117,9 @@ If it's nil, the hours remind will not started."
 (defun rainbow-fart--play (keyword)
   "A private function to play voice for matched KEYWORD."
   (unless (or rainbow-fart--playing
-              (not (when rainbow-fart--play-last-time
-                     (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval))))
+              (not (if rainbow-fart--play-last-time
+                       (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval)
+                     (setq rainbow-fart--play-last-time (float-time)))))
     (when-let ((files (cdr (assoc keyword rainbow-fart-voice-alist))))
       (let ((file (nth (random (length files)) files)))
         (setq rainbow-fart--playing t)
