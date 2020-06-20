@@ -1,4 +1,23 @@
-- name: Emacs Lisp checker
-uses: leotaku/elisp-check@master
-with:
-  check: melpa
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        emacs_version:
+          - 25.1
+          - 25.3
+          - 26.1
+          - 26.3
+          - snapshot
+    steps:
+      - uses: leotaku/elisp-check@master
+        with:
+          check: melpa
+          file: '*.el'
+          ignore_warnings: false
+          warnings_as_errors: false
