@@ -1,7 +1,4 @@
-- name: Emacs Lisp check
-  uses: leotaku/elisp-check@master
-  with:
-    check: melpa
-    file: '*.el'
-    ignore_warnings: false
-    warnings_as_errors: false
+- name: Emacs Lisp checker
+uses: leotaku/elisp-check@master
+with:
+  check: melpa
