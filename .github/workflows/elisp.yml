@@ -1,4 +1,4 @@
-name: Emacs Lisp checker
+name: CI
 
 on: [push, pull_request]
 
