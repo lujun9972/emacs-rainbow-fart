@@ -1,22 +1,19 @@
 
-name: CI
+name: Emacs Lisp checker
 
 on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        emacs_version:
-          - 25.1
-          - 25.3
-          - 26.1
-          - 26.3
-          - snapshot
+        os: [ubuntu-16.04, ubuntu-18.04]
+        emacs_version: [25.1, snapshot]
     steps:
       - uses: leotaku/elisp-check@master
         with:
+          emacs_version: ${{ matrix.emacs_version }}
           check: melpa
           file: '*.el'
           ignore_warnings: false
