@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-19 23:10:47 stardiviner>
+;;; Time-stamp: <2020-06-20 14:58:26 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
@@ -78,16 +78,16 @@
   :safe #'listp
   :group 'rainbow-fart)
 
-(defcustom rainbow-fart-voice-directory
-  (concat (file-name-directory (or load-file-name buffer-file-name))
-          "voices/" rainbow-fart-voice-model "/")
-  "The directory of voices."
+(defcustom rainbow-fart-voice-model "JustKowalski"
+  "The voice model to be used."
   :type 'string
   :safe #'stringp
   :group 'rainbow-fart)
 
-(defcustom rainbow-fart-voice-model "JustKowalski"
-  "The voice model to be used."
+(defcustom rainbow-fart-voice-directory
+  (concat (file-name-directory (or load-file-name buffer-file-name))
+          "voices/" rainbow-fart-voice-model "/")
+  "The directory of voices."
   :type 'string
   :safe #'stringp
   :group 'rainbow-fart)
