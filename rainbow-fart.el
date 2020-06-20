@@ -189,7 +189,7 @@ If it's nil, the hours remind will not started."
 
 (defvar rainbow-fart--timer nil)
 
-
+;;;###autoload
 (define-minor-mode rainbow-fart-mode
   "A minor mode add an encourager when you programming."
   :init-value nil
