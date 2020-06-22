@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-20 15:35:41 stardiviner>
+;;; Time-stamp: <2020-06-21 00:16:59 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -44,6 +44,7 @@
     ("function" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("->" . ("arrow_function_01.mp3"))
     ("->>" . ("arrow_function_01.mp3"))
+    ("=>" . ("arrow_function_01.mp3"))
     ("if" . ("if_01.mp3" "if_02.mp3" "if_03.mp3"))
     ("while" . ("if_01.mp3" "if_02.mp3" "if_03.mp3"))
     ("when" . ("if_01.mp3" "if_02.mp3" "if_03.mp3"))
