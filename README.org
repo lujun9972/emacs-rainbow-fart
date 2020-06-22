@@ -31,9 +31,12 @@ This package elisp code is published under GPL v3, the voice data is from
 
 * Install
 
+** use-package + Quelpa
+
 #+begin_src emacs-lisp
-(require 'rainbow-fart)
-(add-hook 'prog-mode-hook #'rainbow-fart-mode)
+(use-package rainbow-fart
+  :quelpa (rainbow-fart :fetcher "github" :repo "stardiviner/emacs-rainbow-fart")
+  :hook (prog-mode . rainbow-fart-mode))
 #+end_src
 
 * Contribution
