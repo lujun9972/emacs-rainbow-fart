@@ -118,7 +118,7 @@ If it's nil, the hours remind will not started."
 (defun rainbow-fart--get-media-uri (keyword)
   "Get media uri based on KEYWORD."
   (when-let ((uris (cdr (assoc keyword rainbow-fart-voice-alist))))
-    (let (uri (nth (random (length uris)) uris))
+    (let ((uri (nth (random (length uris)) uris)))
       (if (url-type (url-generic-parse-url uri))
           uri
         (let ((uri (expand-file-name uri rainbow-fart-voice-directory)))
