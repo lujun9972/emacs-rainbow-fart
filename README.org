@@ -48,6 +48,7 @@ This package elisp code is published under GPL v3, the voice data is from
 ** Contributors
 
 - DogLooksGood
+- lujun9972
 
 * Usage
 
