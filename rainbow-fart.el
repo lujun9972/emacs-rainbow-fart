@@ -30,6 +30,7 @@
 ;;; Code:
 
 (require 'flycheck)
+(require 'url)
 
 (defgroup rainbow-fart nil
   "rainbow-fart-mode customize group."
@@ -114,29 +115,36 @@ If it's nil, the hours remind will not started."
 (defvar rainbow-fart--play-last-time nil
   "The last time of rainbow-fart play.")
 
+(defun rainbow-fart--get-media-uri (keyword)
+  "Get media uri based on KEYWORD."
+  (when-let* ((uris (cdr (assoc keyword rainbow-fart-voice-alist)))
+              (uri (nth (random (length uris)) uris)))
+    (if (url-type (url-generic-parse-url uri))
+        uri
+      (let ((uri (expand-file-name uri rainbow-fart-voice-directory)))
+        (when (file-exists-p uri)
+          uri)))))
+
+
 (defun rainbow-fart--play (keyword)
   "A private function to play voice for matched KEYWORD."
   (unless (or rainbow-fart--playing
               (not (if rainbow-fart--play-last-time
                        (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval)
                      (setq rainbow-fart--play-last-time (float-time)))))
-    (when-let ((files (cdr (assoc keyword rainbow-fart-voice-alist))))
-      (let ((file (nth (random (length files)) files)))
-        (setq rainbow-fart--playing t)
-        (let ((file-path (when (file-exists-p (concat rainbow-fart-voice-directory file))
-                           (concat rainbow-fart-voice-directory file)))
-              (command (cond
-                        ;; ((executable-find "aplay") "aplay")
-                        ((executable-find "mpg123") "mpg123")
-                        ((executable-find "mplayer") "mplayer")
-                        ((executable-find "mpv") "mpv"))))
-          (make-process :name "rainbow-fart"
-                        :command `(,command ,file-path)
-                        :buffer "*rainbow-fart*"
-                        :sentinel (lambda (_ __)
-                                    (setq rainbow-fart--playing nil)
-                                    (setq rainbow-fart--play-last-time (float-time)))))))))
-
+    (when-let ((uri (rainbow-fart--get-media-uri keyword))
+               (command (cond
+                         ;; ((executable-find "aplay") "aplay")
+                         ((executable-find "mpg123") "mpg123")
+                         ((executable-find "mplayer") "mplayer")
+                         ((executable-find "mpv") "mpv"))))
+      (setq rainbow-fart--playing t)
+      (make-process :name "rainbow-fart"
+                    :command `(,command ,uri)
+                    :buffer "*rainbow-fart*"
+                    :sentinel (lambda (_ __)
+                                (setq rainbow-fart--playing nil)
+                                (setq rainbow-fart--play-last-time (float-time)))))))
 ;;; prefix detection
 
 (defun rainbow-fart--post-self-insert ()
