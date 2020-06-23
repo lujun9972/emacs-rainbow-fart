@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-21 00:16:59 stardiviner>
+;;; Time-stamp: <2020-06-23 21:31:52 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -98,7 +98,8 @@
   :group 'rainbow-fart)
 
 (defcustom rainbow-fart-keyword-interval (* 60 5)
-  "The time interval in seconds of rainbow-fart play voice for keywords."
+  "The time interval in seconds of rainbow-fart play voice for keywords.
+If it is nil, will play sound for every keywords."
   :type 'number
   :safe #'numberp
   :group 'rainbow-fart)
@@ -130,9 +131,10 @@ If it's nil, the hours remind will not started."
 (defun rainbow-fart--play (keyword)
   "A private function to play voice for matched KEYWORD."
   (unless (or rainbow-fart--playing
-              (not (if rainbow-fart--play-last-time
-                       (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval)
-                     (setq rainbow-fart--play-last-time (float-time)))))
+              (when rainbow-fart-keyword-interval
+                (not (if rainbow-fart--play-last-time
+                         (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval)
+                       (setq rainbow-fart--play-last-time (float-time))))))
     (when-let ((uri (rainbow-fart--get-media-uri keyword))
                (command (or
                          (executable-find "mpg123")
