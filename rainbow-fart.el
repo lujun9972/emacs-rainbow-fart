@@ -133,11 +133,10 @@ If it's nil, the hours remind will not started."
                        (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-keyword-interval)
                      (setq rainbow-fart--play-last-time (float-time)))))
     (when-let ((uri (rainbow-fart--get-media-uri keyword))
-               (command (cond
-                         ;; ((executable-find "aplay") "aplay")
-                         ((executable-find "mpg123") "mpg123")
-                         ((executable-find "mplayer") "mplayer")
-                         ((executable-find "mpv") "mpv"))))
+               (command (or
+                         (executable-find "mpg123")
+                         (executable-find "mplayer")
+                         (executable-find "mpv"))))
       (setq rainbow-fart--playing t)
       (make-process :name "rainbow-fart"
                     :command `(,command ,uri)
