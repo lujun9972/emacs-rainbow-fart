@@ -40,6 +40,7 @@
 (defcustom rainbow-fart-voice-alist
   '(("defun" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("defn" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
+    ("def" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("fn" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("lambda" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
     ("function" . ("function.mp3" "function_01.mp3" "function_02.mp3" "function_03.mp3"))
