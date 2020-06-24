@@ -59,25 +59,35 @@ Just like the screencast video shows, A voice played when you type some keywords
 
 * Customization
 
-** Don't want keyword voice so frequent? 不想要关键字语音如此频繁？
-
-#+begin_src emacs-lisp
-(setq rainbow-fart-keyword-interval (* 60 10))
-#+end_src
-
-** Don't want hourly reminder? 不想要定时的中午，傍晚和晚上加班？
-
-#+begin_src emacs-lisp
-(setq rainbow-fart-time-interval nil)
-#+end_src
-
-** Choose voice model 选择语音包
+** choose voice model
 
 #+begin_src emacs-lisp
 (setq rainbow-fart-voice-model "JustKowalski")
 #+end_src
 
 *NOTE*: Currently only "JustKowalski" built-in. Contribution welcome.
+
+** control keyword voice
+
+Not frequently play voice for every keywords:
+
+#+begin_src emacs-lisp
+(setq rainbow-fart-keyword-interval (* 60 10))
+#+end_src
+
+Play voice for every keywords:
+
+#+begin_src emacs-lisp
+(setq rainbow-fart-keyword-interval nil)
+#+end_src
+
+** control hourly reminder
+
+Disable hourly reminder:
+
+#+begin_src emacs-lisp
+(setq rainbow-fart-time-interval nil)
+#+end_src
 
 * 音频列表
 
