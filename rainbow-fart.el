@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-24 09:19:00 stardiviner>
+;;; Time-stamp: <2020-06-24 18:01:21 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -152,8 +152,11 @@ If it's nil, the hours remind will not started."
 
 (defun rainbow-fart--post-self-insert ()
   "A hook function on `post-self-insert-hook' to play audio."
-  (let* ((prefix (thing-at-point 'symbol)))
-    (rainbow-fart--play prefix)))
+  (let* ((prefix (thing-at-point 'symbol))
+         (face (get-text-property (1- (point)) 'face)))
+    (when (or (memq face '(font-lock-keyword-face))
+              (null face))
+      (rainbow-fart--play prefix))))
 
 ;;; linter like `flycheck'
 
