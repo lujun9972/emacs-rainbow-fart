@@ -4,7 +4,7 @@
 
 [[logo.png]]
 
-🌈 INTELLIJ RAINBOW FART
+🌈 EMACS RAINBOW FART
 
 This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]] and [[https://github.com/DogLooksGood/rainbow-fart.el][rainbow-fart.el]].
 
