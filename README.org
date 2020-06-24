@@ -14,11 +14,6 @@ Here is a screencast which is recorded by [[https://github.com/DogLooksGood][Dog
 
 [[file:Emacs rainbow-fart demo.mp4][Emacs rainbow-fart demo.mp4]]
 
-** LICENSE
-
-This package elisp code is published under GPL v3, the voice data is from
-[[https://github.com/JustKowalski][GitHub@JustKowalski]] and project [[https://github.com/SaekiRaku/vscode-rainbow-fart][vscode-rainbow-fart]] which is released under [[https://github.com/SaekiRaku/vscode-rainbow-fart/blob/master/LICENSE][MIT license]].
-
 * Features
 
 - auto play voice when you type keywords
@@ -34,17 +29,6 @@ This package elisp code is published under GPL v3, the voice data is from
   :quelpa (rainbow-fart :fetcher "github" :repo "stardiviner/emacs-rainbow-fart")
   :hook (prog-mode . rainbow-fart-mode))
 #+end_src
-
-* Contribution
-
-- [ ] Need an elegant solution to handle different model voices which have different voice files
-- [ ] Need more voice models
-- [ ] I will add contributors into list
-
-** Contributors
-
-- DogLooksGood
-- lujun9972
 
 * Usage
 
@@ -81,4 +65,20 @@ Disable hourly reminder:
 #+begin_src emacs-lisp
 (setq rainbow-fart-time-interval nil)
 #+end_src
+
+* Contribution
+
+- [ ] Need an elegant solution to handle different model voices which have different voice files
+- [ ] Need more voice models
+- [ ] I will add contributors into list
+
+** Contributors
+
+- DogLooksGood
+- lujun9972
+
+* LICENSE
+
+This package elisp code is published under GPL v3, the voice data is from
+[[https://github.com/JustKowalski][GitHub@JustKowalski]] and project [[https://github.com/SaekiRaku/vscode-rainbow-fart][vscode-rainbow-fart]] which is released under [[https://github.com/SaekiRaku/vscode-rainbow-fart/blob/master/LICENSE][MIT license]].
 
