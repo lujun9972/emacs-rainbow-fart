@@ -2,7 +2,7 @@
 
 [[https://github.com/stardiviner/emacs-rainbow-fart/workflows/CI/badge.svg]]
 
-[[emacs-rainbow-fart logo.png][emacs-rainbow-fart logo.png]]
+[[logo.png][logo.png]]
 
 This package is inspired from [[https://saekiraku.github.io/vscode-rainbow-fart/#/zh/][vscode-rainbow-fart]] and [[https://github.com/DogLooksGood/rainbow-fart.el][rainbow-fart.el]].
 
