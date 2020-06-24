@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-23 21:31:52 stardiviner>
+;;; Time-stamp: <2020-06-24 09:19:00 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -195,7 +195,10 @@ If it's nil, the hours remind will not started."
 
 (defun rainbow-fart--timing-remind ()
   "Remind you in specific time quantum."
-  (rainbow-fart--play (rainbow-fart--timing)))
+  (when (and rainbow-fart--play-last-time
+             (> (- (float-time) rainbow-fart--play-last-time) rainbow-fart-time-interval))
+    (rainbow-fart--play (rainbow-fart--timing))
+    (setq rainbow-fart--play-last-time (float-time))))
 
 (defvar rainbow-fart--timer nil)
 
