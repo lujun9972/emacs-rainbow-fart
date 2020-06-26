@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-24 18:01:21 stardiviner>
+;;; Time-stamp: <2020-06-26 08:49:32 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -90,9 +90,8 @@
   :safe #'stringp
   :group 'rainbow-fart)
 
-(defcustom rainbow-fart-voice-directory
-  (concat (file-name-directory (or load-file-name buffer-file-name))
-          "voices/" rainbow-fart-voice-model "/")
+(defcustom rainbow-fart-voices-directory
+  (concat (file-name-directory (or load-file-name buffer-file-name)) "voices/")
   "The directory of voices."
   :type 'string
   :safe #'stringp
@@ -121,10 +120,12 @@ If it's nil, the hours remind will not started."
 (defun rainbow-fart--get-media-uri (keyword)
   "Get media uri based on KEYWORD."
   (when-let ((uris (cdr (assoc keyword rainbow-fart-voice-alist))))
-    (let ((uri (nth (random (length uris)) uris)))
+    (let ((uri (nth (random (length uris)) uris))
+          (voice-model-directory
+           (expand-file-name rainbow-fart-voice-model rainbow-fart-voices-directory)))
       (if (url-type (url-generic-parse-url uri))
           uri
-        (let ((uri (expand-file-name uri rainbow-fart-voice-directory)))
+        (let ((uri (expand-file-name uri voice-model-directory)))
           (when (file-exists-p uri)
             uri))))))
 
