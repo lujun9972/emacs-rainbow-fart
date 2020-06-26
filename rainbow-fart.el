@@ -1,6 +1,6 @@
 ;;; rainbow-fart.el --- Encourage when you programming -*- lexical-binding: t; -*-
 
-;;; Time-stamp: <2020-06-26 08:49:32 stardiviner>
+;;; Time-stamp: <2020-06-26 09:02:43 stardiviner>
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1") (flycheck "32-cvs"))
@@ -111,6 +111,18 @@ If it's nil, the hours remind will not started."
   :safe #'numberp
   :group 'rainbow-fart)
 
+(defcustom rainbow-fart-recorder-command nil
+  "The recorder command for recording voice file."
+  :type 'string
+  :safe #'stringp
+  :group 'rainbow-fart)
+
+(defcustom rainbow-fart-recorder-command-args nil
+  "The command line options for `rainbow-fart-recorder-command'."
+  :type 'list
+  :safe #'listp
+  :group 'rainbow-fart)
+
 (defvar rainbow-fart--playing nil
   "The status of rainbow-fart playing.")
 
@@ -206,6 +218,21 @@ If it's nil, the hours remind will not started."
     (setq rainbow-fart--play-last-time (float-time))))
 
 (defvar rainbow-fart--timer nil)
+
+(defun rainbow-fart-record-voice ()
+  "Create a voice file from recorder.
+The recorded voice will be stored in voice model directory."
+  (interactive)
+  (let* ((keyword (read-string "rainbow-fart record voice for keyword: " (thing-at-point 'symbol)))
+         (recorded-model-directory (expand-file-name "recorded-voice-model" rainbow-fart-voices-directory))
+         (voice-file-name (expand-file-name (format "keyword-%s.mp3" keyword) recorded-model-directory)))
+    (unless (file-exists-p recorded-model-directory)
+      (make-directory recorded-model-directory))
+    (make-process :name "rainbow-fart-recorder"
+                  :command `(,rainbow-fart-recorder-command ,rainbow-fart-recorder-command-args ,voice-file-name)
+                  :buffer "*rainbow-fart-recorder*"
+                  :sentinel (lambda (_ __)
+                              (message "Recording finished.")))))
 
 ;;;###autoload
 (define-minor-mode rainbow-fart-mode
